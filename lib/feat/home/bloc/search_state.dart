@@ -11,13 +11,6 @@ class SearchInitial extends SearchState {}
 
 class SearchLoading extends SearchState {}
 
-class SearchInputSubmitted extends SearchState {
-  final String searchText;
-  const SearchInputSubmitted({required this.searchText});
-  @override
-  List<String> get props => [searchText];
-}
-
 class SearchLoaded extends SearchState {
   final SearchResponseModel searchResponse;
   const SearchLoaded(this.searchResponse);

@@ -8,9 +8,3 @@ abstract class SearchEvent extends Equatable {
 }
 
 class GetSearchResult extends SearchEvent {}
-
-class SearchInputSubmit extends SearchEvent {
-  final String searchText;
-
-  const SearchInputSubmit({required this.searchText});
-}

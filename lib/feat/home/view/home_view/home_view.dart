@@ -25,18 +25,7 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: BlocProvider(
-                create: (context) => _searchBloc,
-                child: TextField(
-                  onSubmitted: (value) {
-                    _searchBloc.add(SearchInputSubmit(searchText: value));
-                  },
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search',
-                      hintStyle: TextStyle(color: Colors.grey)),
-                ))),
+            backgroundColor: Colors.white, title: const Text('Watchlist')),
         body: _buildSearchResult());
   }
 
