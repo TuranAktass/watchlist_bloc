@@ -12,7 +12,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<GetSearchResult>((e, emit) async {
       try {
         emit(SearchLoading());
-        final mList = await searchRepository.fetchSearchResult('');
+        final mList = await searchRepository.fetchSearchResult(query: e.query);
 
         emit(SearchLoaded(mList));
         if (mList.error != null) {

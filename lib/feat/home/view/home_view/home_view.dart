@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/feat/home/bloc/search_bloc.dart';
+import 'package:watchlist/feat/home/repository/model/movie_model/movie_response_model.dart';
 import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
+import 'package:watchlist/feat/movie/movie_details/view/movie_details_view.dart';
 
 class WatchlistHomeView extends StatefulWidget {
   const WatchlistHomeView({Key? key}) : super(key: key);
@@ -18,14 +20,18 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
   void initState() {
     super.initState();
 
-    _searchBloc.add(GetSearchResult());
+    _searchBloc.add(const GetSearchResult(query: 'batman'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.white, title: const Text('Watchlist')),
+            backgroundColor: Colors.white,
+            title: BlocProvider(
+              create: (context) => _searchBloc,
+              child: const SearchField(),
+            )),
         body: _buildSearchResult());
   }
 
@@ -42,9 +48,15 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
               }
             }, child: BlocBuilder<SearchBloc, SearchState>(
               builder: (context, state) {
+                print('BUILDER CALLED WITH ${state.toString()}');
                 if (state is SearchInitial) {
                   return const Center(child: CircularProgressIndicator());
+                } else if (state is GetSearchResult) {
+                  print('get search result');
+
+                  return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchLoading) {
+                  print('SEARCH LOADING VIEW');
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchLoaded) {
                   return _buildSearchResultList(state.searchResponse);
@@ -61,10 +73,49 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
     return ListView.builder(
         itemCount: searchResponse.search!.length,
         itemBuilder: (context, index) {
-          return ListTile(
-              title: Text(searchResponse.search![index].title!),
-              subtitle: Text(searchResponse.search![index].year!),
-              leading: Image.network(searchResponse.search![index].poster!));
+          return MovieListItem(model: searchResponse.search![index]);
         });
+  }
+}
+
+class SearchField extends StatelessWidget {
+  const SearchField({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SearchBloc, SearchState>(
+        bloc: context.read<SearchBloc>(),
+        builder: (context, val) => TextField(
+              onSubmitted: (query) {
+                context.read<SearchBloc>().add(GetSearchResult(query: query));
+              },
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Search',
+                  prefixIcon: Icon(Icons.search)),
+
+              //onChanged: (val) => BlocProvider.of<SearchCubit>(context).search(val),
+            ));
+  }
+}
+
+class MovieListItem extends StatelessWidget {
+  final MovieResponseModel model;
+
+  const MovieListItem({Key? key, required this.model}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MovieDetailsView(id: model.imdbID!))),
+        title: Text(model.title!),
+        subtitle: Text(model.year!),
+        leading: Image.network(
+          model.poster!,
+          errorBuilder: (context, object, _) => const CircleAvatar(),
+        ));
   }
 }
