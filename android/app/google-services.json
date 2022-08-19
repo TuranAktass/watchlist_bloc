@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "793340434521",
+    "project_id": "watch-b5164",
+    "storage_bucket": "watch-b5164.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793340434521:android:d482131f6e2f3c76acb948",
+        "android_client_info": {
+          "package_name": "com.example.watchlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793340434521-nvejlbu2jueoo6tq6m14886jf0utdc9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFZ_ex4tPKDWTYMYNZx4fodCp4I9FSqlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793340434521-nvejlbu2jueoo6tq6m14886jf0utdc9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
