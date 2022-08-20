@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist/components/dialog/error_dialog.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
 import 'package:watchlist/feat/home/view/home_view/home_view.dart';
@@ -136,7 +137,7 @@ class _DisplayNameField extends StatelessWidget {
               hintText: 'Name',
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
             )),
       );
     });
@@ -163,7 +164,7 @@ class _AgeField extends StatelessWidget {
               hintText: 'Age',
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
             )),
       );
     });
@@ -176,38 +177,14 @@ class _SubmitButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<FormBloc, FormValidate>(
         builder: (context, state) => state.isLoading
-            ? CircularProgressIndicator()
+            ? const CircularProgressIndicator()
             : ElevatedButton(
-                child: Text('SUBMIT'),
+                child: const Text('SUBMIT'),
                 onPressed: () => !state.isFormValid
                     ? context
                         .read<FormBloc>()
                         .add(const FormSubmitted(Status.signUp))
                     : null,
               ));
-  }
-}
-
-class ErrorDialog extends StatelessWidget {
-  const ErrorDialog({Key? key, required this.errorMessage}) : super(key: key);
-  final String errorMessage;
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Container(
-        child: Text(errorMessage),
-      ),
-      actions: [
-        TextButton(
-          child: const Text('OK'),
-          onPressed: () => errorMessage!.contains("Please Verify your email")
-              ? Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                      builder: (context) => const WatchlistHomeView()),
-                  (Route<dynamic> route) => false)
-              : Navigator.of(context).pop(),
-        )
-      ],
-    );
   }
 }
