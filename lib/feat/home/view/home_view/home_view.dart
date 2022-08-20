@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
 import 'package:watchlist/feat/home/bloc/search_bloc.dart';
 import 'package:watchlist/feat/home/repository/model/movie_model/movie_response_model.dart';
 import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
@@ -26,13 +27,23 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        appBar: WatchlistAppBar(
+            centerTitle: true,
             backgroundColor: Colors.white,
-            title: BlocProvider(
-              create: (context) => _searchBloc,
-              child: const SearchField(),
-            )),
-        body: _buildSearchResult());
+            title:
+                const Text('Watchlist', style: TextStyle(color: Colors.black))),
+        body: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: BlocProvider(
+                create: (_) => _searchBloc,
+                child: SearchField(),
+              ),
+            ),
+            Expanded(flex: 9, child: _buildSearchResult())
+          ],
+        ));
   }
 
   _buildSearchResult() {
@@ -85,16 +96,17 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(
         bloc: context.read<SearchBloc>(),
-        builder: (context, val) => TextField(
-              onSubmitted: (query) {
-                context.read<SearchBloc>().add(GetSearchResult(query: query));
-              },
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Search',
-                  prefixIcon: Icon(Icons.search)),
-
-              //onChanged: (val) => BlocProvider.of<SearchCubit>(context).search(val),
+        builder: (context, val) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onSubmitted: (query) {
+                  context.read<SearchBloc>().add(GetSearchResult(query: query));
+                },
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Search',
+                    prefixIcon: Icon(Icons.search)),
+              ),
             ));
   }
 }
@@ -113,9 +125,15 @@ class MovieListItem extends StatelessWidget {
                 builder: (context) => MovieDetailsView(id: model.imdbID!))),
         title: Text(model.title!),
         subtitle: Text(model.year!),
-        leading: Image.network(
-          model.poster!,
-          errorBuilder: (context, object, _) => const CircleAvatar(),
+        leading: SizedBox(
+          width: 50,
+          height: 200,
+          child: Image.network(
+            model.poster!,
+            fit: BoxFit.fitWidth,
+            errorBuilder: (context, object, _) =>
+                Image.asset('assets/images/no_image.png'),
+          ),
         ));
   }
 }

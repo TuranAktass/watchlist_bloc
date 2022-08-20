@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist/components/dialog/error_dialog.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/view/sign_up_view/sign_up_view.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
@@ -24,7 +25,7 @@ class SignInView extends StatelessWidget {
                 context.read<AuthBloc>().add(AuthenticationStarted());
               } else if (state.isFormValidateFailed) {
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text('Form is not valid')));
+                    .showSnackBar(const SnackBar(content: Text('Form is not valid')));
               }
             },
           ),
@@ -87,9 +88,9 @@ class _SubmitButton extends StatelessWidget {
     return BlocBuilder<FormBloc, FormValidate>(
       builder: (context, state) {
         return ElevatedButton(
-          child: Text('Sign In'),
+          child: const Text('Sign In'),
           onPressed: () =>
-              context.read<FormBloc>().add(FormSubmitted(Status.signIn)),
+              context.read<FormBloc>().add(const FormSubmitted(Status.signIn)),
         );
       },
     );
