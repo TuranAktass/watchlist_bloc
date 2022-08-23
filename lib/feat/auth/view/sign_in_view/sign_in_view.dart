@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/dialog/error_dialog.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
-import 'package:watchlist/feat/auth/view/sign_up_view/sign_up_view.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
 import 'package:watchlist/feat/home/view/home_view/home_view.dart';
 

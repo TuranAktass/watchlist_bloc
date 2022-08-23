@@ -1,9 +1,8 @@
-
 class MovieResponseModel {
-  String? title;
   String? year;
   String? imdbID;
   String? type;
+  String? title;
   String? poster;
 
   MovieResponseModel(
@@ -18,12 +17,12 @@ class MovieResponseModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Title'] = this.title;
-    data['Year'] = this.year;
-    data['imdbID'] = this.imdbID;
-    data['Type'] = this.type;
-    data['Poster'] = this.poster;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Title'] = title;
+    data['Year'] = year;
+    data['imdbID'] = imdbID;
+    data['Type'] = type;
+    data['Poster'] = poster;
     return data;
   }
 }

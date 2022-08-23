@@ -13,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  
+
   Bloc.observer = AppBlocObserver();
 
   runApp(MultiBlocProvider(providers: [
@@ -21,10 +21,12 @@ void main() async {
     BlocProvider(
         create: (context) =>
             AuthBloc(AuthRepository())..add(AuthenticationStarted()))
-  ], child: WatchlistApp()));
+  ], child: const WatchlistApp()));
 }
 
 class WatchlistApp extends StatelessWidget {
+  const WatchlistApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +34,7 @@ class WatchlistApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocNavigate(),
+      home: const BlocNavigate(),
     );
   }
 }

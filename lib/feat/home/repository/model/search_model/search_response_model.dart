@@ -24,7 +24,7 @@ class SearchResponseModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (search != null) {
       data['Search'] = search!.map((v) => v.toJson()).toList();
     }

@@ -41,7 +41,7 @@ class SignUpView extends StatelessWidget {
         appBar: AppBar(),
         body: Center(
           child: Column(
-            children: [
+            children: const [
               _EmailField(),
               _PasswordField(),
               _AgeField(),
@@ -56,6 +56,7 @@ class SignUpView extends StatelessWidget {
 }
 
 class _EmailField extends StatelessWidget {
+  const _EmailField({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -75,7 +76,7 @@ class _EmailField extends StatelessWidget {
               hintText: 'Email',
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
             )),
       );
     });
@@ -97,7 +98,7 @@ class _PasswordField extends StatelessWidget {
             decoration: InputDecoration(
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               helperText:
                   '''Password should be at least 8 characters with at least one letter and number''',
               helperMaxLines: 2,
@@ -118,6 +119,7 @@ class _PasswordField extends StatelessWidget {
 }
 
 class _DisplayNameField extends StatelessWidget {
+  const _DisplayNameField({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -145,6 +147,7 @@ class _DisplayNameField extends StatelessWidget {
 }
 
 class _AgeField extends StatelessWidget {
+  const _AgeField({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -172,9 +175,9 @@ class _AgeField extends StatelessWidget {
 }
 
 class _SubmitButton extends StatelessWidget {
+  const _SubmitButton({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return BlocBuilder<FormBloc, FormValidate>(
         builder: (context, state) => state.isLoading
             ? const CircularProgressIndicator()
