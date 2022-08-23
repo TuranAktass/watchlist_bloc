@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,9 +85,9 @@ class FormBloc extends Bloc<FormEvent, FormValidate> {
         age: state.age,
         displayName: state.displayName);
 
-    if (event.value == Status.signUp) {
+    if (event.value == Status.register) {
       await _updateUIAndSignUp(event, emit, user);
-    } else if (event.value == Status.signIn) {
+    } else if (event.value == Status.login) {
       await _authenticateUser(event, emit, user);
     }
   }
@@ -147,6 +149,7 @@ class FormBloc extends Bloc<FormEvent, FormValidate> {
 
   _authenticateUser(
       FormSubmitted event, Emitter<FormValidate> emit, UserModel user) async {
+    log('IM CALLED');
     emit(state.copyWith(
         errorMessage: "",
         isFormValid:
