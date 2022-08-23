@@ -5,6 +5,7 @@ import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
+import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/home/bloc/search_bloc.dart';
 import 'package:watchlist/feat/home/repository/model/movie_model/movie_response_model.dart';
 import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
@@ -143,6 +144,21 @@ class MovieListItem extends StatelessWidget {
                 builder: (context) => MovieDetailsView(id: model.imdbID!))),
         title: Text(model.title!),
         subtitle: Text(model.year!),
+        trailing: BlocProvider(
+          create: (context) => FavoritesBloc(),
+          child: BlocBuilder<FavoritesBloc, FavoritesState>(
+              builder: (context, state) {
+            return IconButton(
+                icon: const Icon(Icons.favorite),
+                onPressed: () async {
+                  var uid = FirebaseAuth.instance.currentUser!.uid;
+
+                  context
+                      .read<FavoritesBloc>()
+                      .add(FavoritesAdd(uid: uid, id: model.imdbID!));
+                });
+          }),
+        ),
         leading: SizedBox(
           width: 50,
           height: 200,
