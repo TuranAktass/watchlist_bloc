@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/bloc/bloc_observer.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
@@ -8,6 +9,7 @@ import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
 import 'package:watchlist/feat/home/view/home_view/home_view.dart';
 import 'package:watchlist/firebase_options.dart';
+import 'package:watchlist/theme/main_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,9 +33,7 @@ class WatchlistApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Watchlist',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: WatchlistTheme.mainTheme,
       home: const BlocNavigate(),
     );
   }
@@ -48,8 +48,10 @@ class BlocNavigate extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthSuccess) {
           return const WatchlistHomeView();
-        } else {
+        } else if (state is AuthenticationFailure) {
           return const WelcomeView();
+        } else {
+          return Container();
         }
       },
     );

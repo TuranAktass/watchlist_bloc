@@ -1,6 +1,6 @@
 part of 'form_bloc.dart';
 
-enum Status { signIn, signUp }
+enum Status { login, register }
 
 abstract class FormEvent extends Equatable {
   const FormEvent();

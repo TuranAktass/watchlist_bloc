@@ -13,7 +13,7 @@ class AuthSuccess extends AuthState {
   const AuthSuccess({this.displayName});
 
   @override
-  List<Object> get props => [displayName!];
+  List<Object> get props => [displayName ?? ''];
 }
 
 class AuthenticationFailure extends AuthState {

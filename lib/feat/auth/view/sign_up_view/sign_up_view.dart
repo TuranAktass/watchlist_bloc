@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist/components/custom/scaffold_body_padding.dart';
 import 'package:watchlist/components/dialog/error_dialog.dart';
+import 'package:watchlist/constants/watchlist_colors.dart';
+import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
 import 'package:watchlist/feat/home/view/home_view/home_view.dart';
@@ -38,17 +41,44 @@ class SignUpView extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Column(
-            children: const [
-              _EmailField(),
-              _PasswordField(),
-              _AgeField(),
-              _DisplayNameField(),
-              _SubmitButton(),
-            ],
-          ),
+        backgroundColor: WatchlistColors.ebonyClay,
+        body: BodyPadding(
+          child: _RegisterFormContainer(),
+        ),
+      ),
+    );
+  }
+}
+
+class _RegisterFormContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: WatchlistColors.white.withOpacity(0.3),
+        ),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          direction: Axis.vertical,
+          spacing: 8.0,
+          children: [
+            Text(WatchlistStrings.register,
+                textAlign: TextAlign.left,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(color: Colors.white)),
+            const SizedBox(height: 8.0),
+            const _EmailField(),
+            const _PasswordField(),
+            const _AgeField(),
+            const _DisplayNameField(),
+            const _SubmitButton(),
+          ],
         ),
       ),
     );
@@ -68,15 +98,13 @@ class _EmailField extends StatelessWidget {
                 context.read<FormBloc>().add(EmailChanged(value)),
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              labelText: 'Email',
-              helperText: 'A complete, valid email e.g. joe@gmail.com',
-              errorText: !state.isEmailValid
-                  ? 'Please ensure the email entered is valid'
-                  : null,
-              hintText: 'Email',
+              labelText: WatchlistStrings.email,
+              helperText: WatchlistInfoStrings.emailInformation,
+              errorText:
+                  !state.isEmailValid ? WatchlistErrorStrings.email : null,
+              hintText: WatchlistStrings.email,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: const OutlineInputBorder(),
             )),
       );
     });
@@ -98,14 +126,12 @@ class _PasswordField extends StatelessWidget {
             decoration: InputDecoration(
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: const OutlineInputBorder(),
-              helperText:
-                  '''Password should be at least 8 characters with at least one letter and number''',
+              helperText: WatchlistInfoStrings.passwordInformation,
               helperMaxLines: 2,
-              labelText: 'Password',
+              labelText: WatchlistStrings.password,
               errorMaxLines: 2,
               errorText: !state.isPasswordValid
-                  ? '''Password must be at least 8 characters and contain at least one letter and number'''
+                  ? WatchlistErrorStrings.password
                   : null,
             ),
             onChanged: (value) {
@@ -131,15 +157,13 @@ class _DisplayNameField extends StatelessWidget {
                 context.read<FormBloc>().add(NameChanged(value)),
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              labelText: 'Nickname',
-              helperText: 'Nickname',
-              errorText: !state.isNameValid
-                  ? 'Please ensure the nickname entered is valid'
-                  : null,
-              hintText: 'Name',
+              labelText: WatchlistStrings.nickname,
+              helperText: WatchlistInfoStrings.nicknameInformation,
+              errorText:
+                  !state.isNameValid ? WatchlistErrorStrings.nickname : null,
+              hintText: WatchlistStrings.nickname,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: const OutlineInputBorder(),
             )),
       );
     });
@@ -159,15 +183,12 @@ class _AgeField extends StatelessWidget {
                 context.read<FormBloc>().add(AgeChanged(int.parse(value))),
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              labelText: 'Age',
-              helperText: 'At least 13',
-              errorText: !state.isAgeValid
-                  ? 'Please ensure the age entered is valid'
-                  : null,
-              hintText: 'Age',
+              labelText: WatchlistStrings.age,
+              helperText: WatchlistInfoStrings.ageInformation,
+              errorText: !state.isAgeValid ? WatchlistErrorStrings.age : null,
+              hintText: WatchlistStrings.age,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              border: const OutlineInputBorder(),
             )),
       );
     });
@@ -181,13 +202,18 @@ class _SubmitButton extends StatelessWidget {
     return BlocBuilder<FormBloc, FormValidate>(
         builder: (context, state) => state.isLoading
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-                child: const Text('SUBMIT'),
-                onPressed: () => !state.isFormValid
-                    ? context
-                        .read<FormBloc>()
-                        .add(const FormSubmitted(Status.signUp))
-                    : null,
+            : SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(primary: WatchlistColors.deYork),
+                  child: const Text(WatchlistStrings.register),
+                  onPressed: () => !state.isFormValid
+                      ? context
+                          .read<FormBloc>()
+                          .add(const FormSubmitted(Status.register))
+                      : null,
+                ),
               ));
   }
 }
