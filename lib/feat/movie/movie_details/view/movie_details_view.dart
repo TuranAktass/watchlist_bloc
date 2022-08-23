@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
 import 'package:watchlist/components/custom/rating_starts.dart';
 import 'package:watchlist/feat/movie/movie_details/bloc/movie_details_bloc.dart';
 import 'package:watchlist/feat/movie/movie_details/repository/model/movie_details_model.dart';
@@ -96,12 +95,12 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
 }
 
 class GenreRow extends StatelessWidget {
-  String genres;
+  const GenreRow({Key? key, required this.genres}) : super(key: key);
+  final String genres;
 
-  GenreRow({Key? key, required this.genres}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    List<String> genreList = this.genres.split(',');
+    List<String> genreList = genres.split(',');
     return Row(
       children: List.generate(genreList.length, (index) {
         return _buildGenreCard(genreList[index]);
@@ -123,7 +122,7 @@ class GenreRow extends StatelessWidget {
 }
 
 class _NetworkPosterView extends StatelessWidget {
-  _NetworkPosterView({Key? key, required this.poster}) : super(key: key);
+  const _NetworkPosterView({Key? key, required this.poster}) : super(key: key);
   final String poster;
   @override
   Widget build(BuildContext context) {
@@ -141,7 +140,7 @@ class _NetworkPosterView extends StatelessWidget {
 
             // Colors.transparent // <-- you might need this if you want full transparency at the edge
           ],
-          stops: [
+          stops: const [
             0.0,
             0.5,
             0.55,

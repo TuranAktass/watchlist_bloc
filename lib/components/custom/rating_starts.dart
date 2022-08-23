@@ -4,10 +4,10 @@ class RateStars extends StatefulWidget {
   const RateStars({Key? key, required this.rating}) : super(key: key);
   final String rating;
   @override
-  _RateStarsState createState() => _RateStarsState();
+  RateStarsState createState() => RateStarsState();
 }
 
-class _RateStarsState extends State<RateStars> {
+class RateStarsState extends State<RateStars> {
   var rating = 0.0;
 
   @override

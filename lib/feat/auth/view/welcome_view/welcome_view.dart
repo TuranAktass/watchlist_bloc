@@ -12,7 +12,7 @@ class WelcomeView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('WELCOME'),
+            const Text('WELCOME'),
             _NavigateToSignUpButton(),
             _NavigateToSignInButton(),
           ],
@@ -27,9 +27,9 @@ class _NavigateToSignUpButton extends StatelessWidget {
         onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SignUpView(),
+              builder: (context) => const SignUpView(),
             )),
-        child: Text('Kayıt Ol'));
+        child: const Text('Kayıt Ol'));
   }
 }
 
@@ -40,8 +40,8 @@ class _NavigateToSignInButton extends StatelessWidget {
         onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SignInView(),
+              builder: (context) => const SignInView(),
             )),
-        child: Text('Giriş Yap'));
+        child: const Text('Giriş Yap'));
   }
 }

@@ -10,9 +10,7 @@ abstract class SearchState extends Equatable {
 class SearchInitial extends SearchState {}
 
 class SearchLoading extends SearchState {
-  SearchLoading() {
-    print('SEARCH LOADING');
-  }
+  const SearchLoading();
   @override
   List<Object> get props => [];
 }
@@ -22,9 +20,7 @@ class SearchLoaded extends SearchState {
 
   @override
   List<SearchResponseModel> get props => [searchResponse];
-  SearchLoaded(this.searchResponse) {
-    print('RESPONSE is => ${searchResponse.search!.first.title}');
-  }
+  const SearchLoaded(this.searchResponse);
 }
 
 class SearchError extends SearchState {

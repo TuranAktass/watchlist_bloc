@@ -1,8 +1,9 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
 import 'package:watchlist/feat/auth/repository/model/user_model.dart';
+import 'package:watchlist/feat/database/repository/database_repository.dart';
 import 'package:watchlist/feat/form/validation_constants/validation_constants.dart';
 
 part 'form_event.dart';
@@ -10,6 +11,7 @@ part 'form_state.dart';
 
 class FormBloc extends Bloc<FormEvent, FormValidate> {
   final AuthRepository _authRepository = AuthRepository();
+  final DatabaseRepository _databaseRepository = DatabaseRepositoryImpl();
   FormBloc()
       : super(const FormValidate(
             email: "example@gmail.com",
@@ -110,7 +112,6 @@ class FormBloc extends Bloc<FormEvent, FormValidate> {
 
   _updateUIAndSignUp(
       FormSubmitted event, Emitter<FormValidate> emit, UserModel user) async {
-    print('state.password => ' + state.password);
     emit(state.copyWith(
         errorMessage: "",
         isFormValid: _isPasswordValid(state.password) &&
@@ -124,8 +125,7 @@ class FormBloc extends Bloc<FormEvent, FormValidate> {
         UserModel updatedUser = user.copyWith(
             uid: authUser!.user!.uid, isVerified: authUser.user!.emailVerified);
 
-        //TODO FOR DATABASE OPERATIONS
-        // await _databaseRepository.saveUserData(updatedUser);
+        await _databaseRepository.saveUserData(updatedUser);
         if (updatedUser.isVerified!) {
           emit(state.copyWith(isLoading: false, errorMessage: ""));
         } else {

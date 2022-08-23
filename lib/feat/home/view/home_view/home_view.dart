@@ -38,7 +38,7 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
               flex: 1,
               child: BlocProvider(
                 create: (_) => _searchBloc,
-                child: SearchField(),
+                child: const SearchField(),
               ),
             ),
             Expanded(flex: 9, child: _buildSearchResult())
@@ -59,15 +59,11 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
               }
             }, child: BlocBuilder<SearchBloc, SearchState>(
               builder: (context, state) {
-                print('BUILDER CALLED WITH ${state.toString()}');
                 if (state is SearchInitial) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is GetSearchResult) {
-                  print('get search result');
-
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchLoading) {
-                  print('SEARCH LOADING VIEW');
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is SearchLoaded) {
                   return _buildSearchResultList(state.searchResponse);
