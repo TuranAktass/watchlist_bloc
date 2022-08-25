@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:watchlist/feat/auth/repository/model/user_model.dart';
 
 class DatabaseService {
@@ -8,12 +9,12 @@ class DatabaseService {
     await _db.collection("Users").doc(userData.uid).set(userData.toMap());
   }
 
-  Future<List<UserModel>> retrieveUserData() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Users").get();
-    return snapshot.docs
-        .map((docSnapshot) => UserModel.fromDocumentSnapshot(docSnapshot))
-        .toList();
+  Future<UserModel> retrieveUserData() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    var snapshot = await _db.collection("Users").doc(uid).get();
+
+    print(snapshot.data());
+    return UserModel.fromDocumentSnapshot(snapshot);
   }
 
   Future<String> retrieveUserName(UserModel user) async {

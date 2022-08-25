@@ -9,12 +9,11 @@ part 'database_state.dart';
 class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   final DatabaseRepository _databaseRepository;
   DatabaseBloc(this._databaseRepository) : super(DatabaseInitial()) {
-    on<DatabaseFetched>(_fetchUserData);
-  }
-
-  _fetchUserData(DatabaseFetched event, Emitter<DatabaseState> emit) async {
-    List<UserModel> listofUserData =
-        await _databaseRepository.retrieveUserData();
-    emit(DatabaseSuccess(listofUserData, event.displayName));
+    on<FetchUserDate>((event, emit) {
+      _databaseRepository.retrieveUserData().then((userData) {
+        add(FetchUserDate(userData));
+        emit(DatabaseSuccess(userData, userData.displayName!));
+      });
+    });
   }
 }

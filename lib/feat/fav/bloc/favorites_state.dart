@@ -12,7 +12,7 @@ class FavoritesInitial extends FavoritesState {}
 class FavoritesLoading extends FavoritesState {}
 
 class FavoritesLoaded extends FavoritesState {
-  final List<String> favorites;
+  final List<FavModel> favorites;
   const FavoritesLoaded({required this.favorites});
   @override
   List<Object> get props => [favorites];

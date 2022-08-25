@@ -6,7 +6,8 @@ class WatchlistStrings {
   static const password = 'Password';
   static const age = 'Age';
   static const nickname = 'Display Name';
-  static const homePage = 'Ana Sayfa';
+  static const homePage = 'Home';
+  static const favorites = 'Favorites';
 }
 
 class WatchlistErrorStrings {
