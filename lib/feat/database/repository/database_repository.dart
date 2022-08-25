@@ -10,12 +10,12 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<List<UserModel>> retrieveUserData() {
+  Future<UserModel> retrieveUserData() {
     return service.retrieveUserData();
   }
 }
 
 abstract class DatabaseRepository {
   Future<void> saveUserData(UserModel user);
-  Future<List<UserModel>> retrieveUserData();
+  Future<UserModel> retrieveUserData();
 }

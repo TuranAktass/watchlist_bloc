@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
+import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
+import 'package:watchlist/feat/fav/view/favorites_view.dart';
 import 'package:watchlist/feat/home/bloc/search_bloc.dart';
 import 'package:watchlist/feat/home/repository/model/movie_model/movie_response_model.dart';
 import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
@@ -33,7 +35,13 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: WatchlistAppBar(
-            actions: [],
+            actions: [
+              IconButton(
+                icon: Icon(Icons.favorite, color: WatchlistColors.punch),
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FavoritesView())),
+              )
+            ],
             centerTitle: true,
             backgroundColor: Colors.white,
             title:

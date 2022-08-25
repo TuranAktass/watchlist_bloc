@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:watchlist/feat/auth/repository/model/user_model.dart';
+import 'package:watchlist/feat/fav/repository/model/fav_model.dart';
 
 class FavoritesService {
   final _db = FirebaseFirestore.instance;
@@ -12,7 +12,13 @@ class FavoritesService {
         .doc(userData.uid)
         .collection('favorites')
         .get();
-    print(res.docs.map((docSnapshot) => docSnapshot.data()).toList());
+    try {
+      var rModel = FavResponseModel(
+          data: res.docs.map((docSnapshot) => docSnapshot.data()).toList());
+      return rModel.favList;
+    } catch (e) {
+      return FavResponseModel.withError(e.toString());
+    }
   }
 
   Future<dynamic> addFavorite(String uid, String id) async {
@@ -21,7 +27,5 @@ class FavoritesService {
         await _db.collection('Users').doc(uid).collection('favorites').add({
       'id': id,
     });
-
-    log(res.toString());
   }
 }

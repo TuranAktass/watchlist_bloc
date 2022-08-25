@@ -6,6 +6,8 @@ import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/bloc/bloc_observer.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
+import 'package:watchlist/feat/database/bloc/database_bloc.dart';
+import 'package:watchlist/feat/database/repository/database_repository.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
 import 'package:watchlist/feat/home/view/home_view/home_view.dart';
 import 'package:watchlist/firebase_options.dart';
@@ -20,6 +22,7 @@ void main() async {
 
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (context) => FormBloc()),
+    BlocProvider(create: (context) => DatabaseBloc(DatabaseRepositoryImpl())),
     BlocProvider(
         create: (context) =>
             AuthBloc(AuthRepository())..add(AuthenticationStarted()))

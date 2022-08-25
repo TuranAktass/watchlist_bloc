@@ -8,8 +8,8 @@ abstract class FavoritesEvent extends Equatable {
 }
 
 class FavoritesLoad extends FavoritesEvent {
-  final UserModel userData;
-  const FavoritesLoad({required this.userData});
+
+  const FavoritesLoad();
 }
 
 class FavoritesAdd extends FavoritesEvent {
@@ -22,3 +22,4 @@ class FavoritesRemove extends FavoritesEvent {
   final String id;
   const FavoritesRemove({required this.id});
 }
+
