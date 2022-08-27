@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:watchlist/feat/database/repository/database_repository.dart';
 import 'package:watchlist/feat/fav/repository/favorites_repository.dart';
 import 'package:watchlist/feat/fav/repository/model/fav_model.dart';
+import 'package:watchlist/feat/fav/repository/model/movie_basic_model.dart';
+import 'package:watchlist/feat/movie/movie_details/repository/model/movie_details_model.dart';
 
 part 'favorites_event.dart';
 part 'favorites_state.dart';
@@ -27,8 +29,18 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     on<FavoritesAdd>((event, emit) async {
       try {
         emit(FavoritesLoading());
-        await favoritesRepository.addFavorite(event.uid, event.id);
-        //emit(FavoritesLoaded(favorites: [event.id]));
+        await favoritesRepository.addFavorite(event.uid, event.movie);
+        add(FavoritesLoad());
+      } catch (e) {
+        emit(FavoritesError(error: e.toString()));
+      }
+    });
+
+    on<FavoritesRemove>((event, emit) async {
+      try {
+        emit(FavoritesLoading());
+        await favoritesRepository.removeFavorite(event.uid, event.movie);
+        add(FavoritesLoad());
       } catch (e) {
         emit(FavoritesError(error: e.toString()));
       }

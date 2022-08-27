@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
+import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
-import 'package:watchlist/feat/auth/repository/auth_repository.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
+import 'package:watchlist/feat/fav/repository/model/movie_basic_model.dart';
 import 'package:watchlist/feat/fav/view/favorites_view.dart';
 import 'package:watchlist/feat/home/bloc/search_bloc.dart';
 import 'package:watchlist/feat/home/repository/model/movie_model/movie_response_model.dart';
@@ -37,9 +38,11 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
         appBar: WatchlistAppBar(
             actions: [
               IconButton(
-                icon: Icon(Icons.favorite, color: WatchlistColors.punch),
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FavoritesView())),
+                icon: const Icon(Icons.favorite, color: WatchlistColors.punch),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FavoritesView())),
               )
             ],
             centerTitle: true,
@@ -140,42 +143,88 @@ class SearchField extends StatelessWidget {
 
 class MovieListItem extends StatelessWidget {
   final MovieResponseModel model;
-
-  const MovieListItem({Key? key, required this.model}) : super(key: key);
+  final FavoritesBloc _favBloc = FavoritesBloc();
+  MovieListItem({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MovieDetailsView(id: model.imdbID!))),
-        title: Text(model.title!),
-        subtitle: Text(model.year!),
-        trailing: BlocProvider(
-          create: (context) => FavoritesBloc(),
-          child: BlocBuilder<FavoritesBloc, FavoritesState>(
-              builder: (context, state) {
-            return IconButton(
-                icon: const Icon(Icons.favorite),
-                onPressed: () async {
-                  var uid = FirebaseAuth.instance.currentUser!.uid;
+    return BlocProvider(
+      create: (_) => _favBloc..add(const FavoritesLoad()),
+      child: ListTile(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MovieDetailsView(id: model.imdbID!))),
+          title: Text(model.title!),
+          subtitle: Text(model.year!),
+          trailing: SizedBox(
+            width: 50,
+            height: 50,
+            child: BlocBuilder<FavoritesBloc, FavoritesState>(
+                builder: (context, state) {
+              if (state is FavoritesError) {
+                Container(child: Text('ERROR'));
+              }
+              if (state is FavoritesLoading) {
+                return const LoadingWidget();
+              }
+              if (state is FavoritesLoaded) {
+                bool isFav = true;
 
-                  context
-                      .read<FavoritesBloc>()
-                      .add(FavoritesAdd(uid: uid, id: model.imdbID!));
-                });
-          }),
-        ),
-        leading: SizedBox(
-          width: 50,
-          height: 200,
-          child: Image.network(
-            model.poster!,
-            fit: BoxFit.fitWidth,
-            errorBuilder: (context, object, _) =>
-                Image.asset('assets/images/no_image.png'),
+                var m = state.favorites.lastIndexWhere(
+                    (element) => element.imdbID == model.imdbID);
+                if (m == -1) {
+                  isFav = false;
+                } else {
+                  isFav = true;
+                }
+
+                return isFav
+                    ? IconButton(
+                        icon: const Icon(Icons.favorite, color: Colors.red),
+                        onPressed: () async {
+                          var uid = FirebaseAuth.instance.currentUser!.uid;
+
+                          context.read<FavoritesBloc>().add(FavoritesRemove(
+                              uid: uid,
+                              movie: MovieBasicModel.fromSearchResponse(
+                                  model: model)));
+                        })
+                    : IconButton(
+                        icon: const Icon(Icons.favorite_border),
+                        onPressed: () async {
+                          var uid = FirebaseAuth.instance.currentUser!.uid;
+
+                          context.read<FavoritesBloc>().add(FavoritesAdd(
+                              uid: uid,
+                              movie: MovieBasicModel.fromSearchResponse(
+                                  model: model)));
+                        });
+                //  return Icon(Icons.favorite);
+              } else {
+                return Text('asd');
+              }
+              /*  return IconButton(
+                    icon: const Icon(Icons.favorite),
+                    onPressed: () async {
+                      var uid = FirebaseAuth.instance.currentUser!.uid;
+              
+                      context.read<FavoritesBloc>().add(FavoritesAdd(
+                          uid: uid,
+                          movie: MovieBasicModel.fromSearchResponse(model: model)));
+                    }); */
+            }),
           ),
-        ));
+          leading: SizedBox(
+            width: 50,
+            height: 200,
+            child: Image.network(
+              model.poster!,
+              fit: BoxFit.fitWidth,
+              errorBuilder: (context, object, _) =>
+                  Image.asset('assets/images/no_image.png'),
+            ),
+          )),
+    );
   }
 }
