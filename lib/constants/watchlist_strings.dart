@@ -26,3 +26,10 @@ class WatchlistInfoStrings {
   static const nicknameInformation =
       'Display name should be at least 3 characters';
 }
+
+class EnumTitles {
+  //*@ Search Types
+
+  static const String movie = 'Movie';
+  static const String user = 'User';
+}

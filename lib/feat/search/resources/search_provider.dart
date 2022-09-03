@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
+import 'package:watchlist/feat/follow/repository/model/follow_user_model.dart';
 import 'package:watchlist/feat/search/repository/model/search_model/search_response_model.dart';
 
 class SearchProvider {
@@ -13,5 +15,24 @@ class SearchProvider {
     } else {
       throw Exception('Failed to load post');
     }
+  }
+
+  Future<List<FollowUserModel>> fetchUserSearchResult({String? query}) async {
+    List<FollowUserModel> uList = [];
+
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .where('displayName', isEqualTo: query)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        uList.add(
+            FollowUserModel.fromJson(json: element.data())..uid = element.id);
+
+        print(element.id);
+      });
+    });
+    print(uList);
+    return uList;
   }
 }

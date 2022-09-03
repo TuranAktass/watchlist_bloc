@@ -15,9 +15,9 @@ class DatabaseService {
     return UserModel.fromDocumentSnapshot(snapshot);
   }
 
-  Future<String> retrieveUserName(UserModel user) async {
+  Future<String> retrieveUserName(String uid) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Users").doc(user.uid).get();
+        await _db.collection("Users").doc(uid).get();
     return snapshot.data()!["displayName"];
   }
 }

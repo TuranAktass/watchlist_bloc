@@ -14,3 +14,11 @@ class GetSearchResult extends SearchEvent {
   @override
   List<Object> get props => query != null ? [query!] : [];
 }
+
+class GetUserSearchResult extends SearchEvent {
+  final String? query;
+  const GetUserSearchResult({this.query});
+
+  @override
+  List<Object> get props => query != null ? [query!] : [];
+}

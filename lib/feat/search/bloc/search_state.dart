@@ -23,6 +23,14 @@ class SearchLoaded extends SearchState {
   const SearchLoaded(this.searchResponse);
 }
 
+class UserSearchLoaded extends SearchState {
+  final List<FollowUserModel> users;
+
+  @override
+  List<FollowUserModel> get props => users;
+  const UserSearchLoaded(this.users);
+}
+
 class SearchError extends SearchState {
   final String? message;
   const SearchError(this.message);
