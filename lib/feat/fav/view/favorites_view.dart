@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
@@ -42,6 +40,9 @@ class _FavoritesViewState extends State<FavoritesView> {
                 child: BlocBuilder<FavoritesBloc, FavoritesState>(
                     bloc: context.read<FavoritesBloc>(),
                     builder: (context, state) {
+                      if (state is FavoritesInitial) {
+                        return const LoadingWidget();
+                      }
                       if (state is FavoritesLoading) {
                         return const LoadingWidget();
                       } else if (state is FavoritesLoaded) {
@@ -62,7 +63,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                               );
                             });
                       } else if (state is FavoritesError) {
-                        return Text('Favorites Error');
+                        return const Text('Favorites Error');
                       } else {
                         return Text('Favorites Unknown: ${state.toString()}');
                       }

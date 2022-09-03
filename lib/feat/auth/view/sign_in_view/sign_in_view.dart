@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/custom/scaffold_body_padding.dart';
 import 'package:watchlist/components/dialog/error_dialog.dart';
@@ -41,7 +40,7 @@ class SignInView extends StatelessWidget {
             },
           )
         ],
-        child: Scaffold(
+        child: const Scaffold(
             backgroundColor: WatchlistColors.ebonyClay,
             body: BodyPadding(
               child: _SignInContainer(),

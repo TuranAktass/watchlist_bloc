@@ -8,6 +8,8 @@ import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 
 class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

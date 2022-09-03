@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/fav/view/favorites_view.dart';
 import 'package:watchlist/feat/home/view/home_view.dart';
 import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
@@ -47,7 +45,7 @@ class WatchlistNavBar extends StatelessWidget {
   }
 
   _buildScreens() {
-    return [
+    return const [
       HomeView(),
       SearchView(),
       FavoritesView(),

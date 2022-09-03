@@ -7,9 +7,9 @@ class FavResponseModel {
   FavResponseModel.withError(this.error);
 
   FavResponseModel({required List<Map<String, dynamic>> data}) {
-    data.forEach((element) {
+    for (var element in data) {
       favList.add(MovieBasicModel.fromJson(json: element));
-    });
+    }
   }
 
   List<MovieBasicModel> get list => favList;

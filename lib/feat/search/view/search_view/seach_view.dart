@@ -1,16 +1,12 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
 import 'package:watchlist/components/loading/loading.dart';
-import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/fav/repository/model/movie_basic_model.dart';
-import 'package:watchlist/feat/fav/view/favorites_view.dart';
 import 'package:watchlist/feat/movie/movie_details/view/movie_details_view.dart';
 import 'package:watchlist/feat/search/bloc/search_bloc.dart';
 import 'package:watchlist/feat/search/repository/model/movie_model/movie_response_model.dart';
@@ -133,7 +129,7 @@ class SearchField extends StatelessWidget {
 
 class MovieListItem extends StatelessWidget {
   final MovieResponseModel model;
-  MovieListItem({Key? key, required this.model}) : super(key: key);
+  const MovieListItem({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +160,8 @@ class MovieListItem extends StatelessWidget {
 }
 
 class _FavoriteButton extends StatefulWidget {
+  const _FavoriteButton({Key? key, required this.model}) : super(key: key);
   final MovieBasicModel model;
-  _FavoriteButton({Key? key, required this.model}) : super(key: key);
   @override
   _FavoriteButtonState createState() => _FavoriteButtonState();
 }
@@ -183,7 +179,7 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
     return BlocBuilder<FavoritesBloc, FavoritesState>(
       builder: (context, state) {
         if (state is FavoritesLoad) {
-          return Text('fav load');
+          return const Text('fav load');
         }
         /* if (state is FavoritesLoading) {
           return const LoadingWidget();
@@ -196,12 +192,15 @@ class _FavoriteButtonState extends State<_FavoriteButton> {
           }
         }
         if (state is FavoritesRemove) {
-          return Text('fav remove');
+          return const Text('fav remove');
+        }
+        if (state is FavoritesLoading || state is FavoritesInitial) {
+          return const LoadingWidget();
         }
         if (state is FavoritesAdd) {
-          return Text('fav add');
+          return const Text('fav add');
         } else {
-          return Text('fav error');
+          return Text('fav error: ${state.toString()}');
         }
       },
     );

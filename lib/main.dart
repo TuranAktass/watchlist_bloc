@@ -10,7 +10,6 @@ import 'package:watchlist/feat/database/repository/database_repository.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
 import 'package:watchlist/feat/navigation/view/navbar_view.dart';
-import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
 import 'package:watchlist/firebase_options.dart';
 import 'package:watchlist/theme/main_theme.dart';
 
