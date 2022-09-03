@@ -6,8 +6,8 @@ import 'package:watchlist/feat/movie/movie_details/repository/model/movie_detail
 class FavoritesRepository {
   FavoritesService _service = FavoritesService();
 
-  Future<dynamic> getFavorites(UserModel userData) async {
-    return await _service.getFavorites(userData);
+  Future<dynamic> getFavorites(String uid) async {
+    return await _service.getFavorites(uid);
   }
 
   Future<dynamic> addFavorite(String uid, MovieBasicModel movie) async {

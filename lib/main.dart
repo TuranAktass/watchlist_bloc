@@ -7,8 +7,10 @@ import 'package:watchlist/feat/auth/repository/auth_repository.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/database/bloc/database_bloc.dart';
 import 'package:watchlist/feat/database/repository/database_repository.dart';
+import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
-import 'package:watchlist/feat/home/view/home_view/home_view.dart';
+import 'package:watchlist/feat/navigation/view/navbar_view.dart';
+import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
 import 'package:watchlist/firebase_options.dart';
 import 'package:watchlist/theme/main_theme.dart';
 
@@ -24,7 +26,9 @@ void main() async {
     BlocProvider(create: (context) => DatabaseBloc(DatabaseRepositoryImpl())),
     BlocProvider(
         create: (context) =>
-            AuthBloc(AuthRepository())..add(AuthenticationStarted()))
+            AuthBloc(AuthRepository())..add(AuthenticationStarted())),
+    BlocProvider(
+        create: (context) => FavoritesBloc()..add(const FavoritesLoad()))
   ], child: const WatchlistApp()));
 }
 
@@ -49,7 +53,7 @@ class BlocNavigate extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is AuthSuccess) {
-          return const WatchlistHomeView();
+          return const WatchlistNavBar();
         } else if (state is AuthenticationFailure) {
           return const WelcomeView();
         } else {

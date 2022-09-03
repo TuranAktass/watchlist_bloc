@@ -24,3 +24,31 @@ class FavoritesError extends FavoritesState {
   @override
   List<Object> get props => [error];
 }
+
+class FavoritesAdding extends FavoritesState {
+  final MovieBasicModel movie;
+  const FavoritesAdding({required this.movie});
+  @override
+  List<Object> get props => [movie];
+}
+
+class FavoritesAdded extends FavoritesState {
+  final MovieBasicModel movie;
+  const FavoritesAdded({required this.movie});
+  @override
+  List<Object> get props => [movie];
+}
+
+class FavoritesRemoving extends FavoritesState {
+  final MovieBasicModel movie;
+  const FavoritesRemoving({required this.movie});
+  @override
+  List<Object> get props => [movie];
+}
+
+class FavoritesRemoved extends FavoritesState {
+  final MovieBasicModel movie;
+  const FavoritesRemoved({required this.movie});
+  @override
+  List<Object> get props => [movie];
+}

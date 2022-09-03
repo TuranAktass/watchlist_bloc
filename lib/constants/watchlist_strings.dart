@@ -1,4 +1,6 @@
 class WatchlistStrings {
+  static const watchlist = 'Watchlist';
+
   static const login = 'Login';
   static const register = 'Register';
 

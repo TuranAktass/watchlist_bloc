@@ -8,12 +8,9 @@ import 'package:watchlist/feat/movie/movie_details/repository/model/movie_detail
 
 class FavoritesService {
   final _db = FirebaseFirestore.instance;
-  Future<dynamic> getFavorites(UserModel userData) async {
-    final res = await _db
-        .collection('Users')
-        .doc(userData.uid)
-        .collection('favorites')
-        .get();
+  Future<dynamic> getFavorites(String uid) async {
+    final res =
+        await _db.collection('Users').doc(uid).collection('favorites').get();
     try {
       var rModel = FavResponseModel(
           data: res.docs.map((docSnapshot) => docSnapshot.data()).toList());

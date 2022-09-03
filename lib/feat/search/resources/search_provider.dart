@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:watchlist/feat/search/repository/model/search_model/search_response_model.dart';
 
 class SearchProvider {
   final String url = 'http://www.omdbapi.com/?apikey=cebce6&s=';

@@ -7,7 +7,7 @@ import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
-import 'package:watchlist/feat/home/view/home_view/home_view.dart';
+import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({Key? key}) : super(key: key);
@@ -35,8 +35,7 @@ class SignInView extends StatelessWidget {
             listener: (context, state) {
               if (state is AuthSuccess) {
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => const WatchlistHomeView()),
+                    MaterialPageRoute(builder: (context) => const SearchView()),
                     (Route<dynamic> route) => false);
               }
             },
@@ -141,9 +140,8 @@ class _SubmitButton extends StatelessWidget {
                       .headline4!
                       .copyWith(color: WatchlistColors.white)),
             ),
-            onPressed: () => context
-                .read<FormBloc>()
-                .add(const FormSubmitted(Status.login)),
+            onPressed: () =>
+                context.read<FormBloc>().add(const FormSubmitted(Status.login)),
           ),
         );
       },

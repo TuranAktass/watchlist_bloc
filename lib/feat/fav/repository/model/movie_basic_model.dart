@@ -1,7 +1,7 @@
-import 'package:watchlist/feat/home/repository/model/movie_model/movie_response_model.dart';
-import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:watchlist/feat/search/repository/model/movie_model/movie_response_model.dart';
 
-class MovieBasicModel {
+class MovieBasicModel extends Equatable {
   String? year;
   String? imdbID;
   String? type;
@@ -33,4 +33,8 @@ class MovieBasicModel {
     type = json['type'];
     year = json['year'];
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [imdbID];
 }

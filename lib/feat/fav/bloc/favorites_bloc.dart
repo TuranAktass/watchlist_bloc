@@ -19,7 +19,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       try {
         emit(FavoritesLoading());
         final user = await db.retrieveUserData();
-        final fList = await favoritesRepository.getFavorites(user);
+        final fList = await favoritesRepository.getFavorites(user.uid!);
         emit(FavoritesLoaded(favorites: fList));
       } catch (e) {
         emit(FavoritesError(error: e.toString()));
@@ -28,9 +28,11 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     on<FavoritesAdd>((event, emit) async {
       try {
-        emit(FavoritesLoading());
         await favoritesRepository.addFavorite(event.uid, event.movie);
-        add(FavoritesLoad());
+       // add(FavoritesLoad());
+        emit(FavoritesLoaded(
+            favorites: await favoritesRepository.getFavorites(event.uid)));
+        // emit(FavoritesAdded(movie: event.movie));
       } catch (e) {
         emit(FavoritesError(error: e.toString()));
       }
@@ -38,9 +40,12 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     on<FavoritesRemove>((event, emit) async {
       try {
-        emit(FavoritesLoading());
+        // emit(FavoritesRemoving(movie: event.movie));
         await favoritesRepository.removeFavorite(event.uid, event.movie);
-        add(FavoritesLoad());
+         emit(FavoritesLoaded(
+            favorites: await favoritesRepository.getFavorites(event.uid)));
+        //add(const FavoritesLoad());
+        //emit(FavoritesRemoved(movie: event.movie));
       } catch (e) {
         emit(FavoritesError(error: e.toString()));
       }
