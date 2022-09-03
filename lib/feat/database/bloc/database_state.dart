@@ -22,3 +22,8 @@ class DatabaseError extends DatabaseState {
   @override
   List<Object?> get props => [];
 }
+
+class DatabaseLoading extends DatabaseState {
+  @override
+  List<Object?> get props => [];
+}

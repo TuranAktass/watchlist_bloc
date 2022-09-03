@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:watchlist/feat/fav/view/favorites_view.dart';
 import 'package:watchlist/feat/home/view/home_view.dart';
+import 'package:watchlist/feat/profile/profile_view.dart';
 import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
 
 class WatchlistNavBar extends StatelessWidget {
@@ -49,6 +50,7 @@ class WatchlistNavBar extends StatelessWidget {
       HomeView(),
       SearchView(),
       FavoritesView(),
+      ProfileView(),
     ];
   }
 
@@ -69,6 +71,12 @@ class WatchlistNavBar extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.heart_fill),
         title: ("Favorites"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.person_fill),
+        title: ("Profile"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       )

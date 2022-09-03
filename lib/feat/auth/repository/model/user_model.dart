@@ -7,10 +7,12 @@ class UserModel {
   String? password;
   final String? displayName;
   final int? age;
+  final String? bio;
   UserModel(
       {this.uid,
       this.email,
       this.password,
+      this.bio,
       this.displayName,
       this.age,
       this.isVerified});
@@ -20,6 +22,7 @@ class UserModel {
       'email': email,
       'displayName': displayName,
       'age': age,
+      'bio': bio,
     };
   }
 
@@ -27,6 +30,7 @@ class UserModel {
       : uid = doc.id,
         email = doc.data()!["email"],
         age = doc.data()!["age"],
+        bio = doc.data()!['bio'],
         displayName = doc.data()!["displayName"];
 
   UserModel copyWith({

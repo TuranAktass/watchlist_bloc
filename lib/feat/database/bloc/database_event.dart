@@ -15,9 +15,6 @@ class DatabaseFetched extends DatabaseEvent {
 }
 
 class FetchUserDate extends DatabaseEvent {
-  final UserModel? user;
-
-  const FetchUserDate(this.user);
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [];
 }

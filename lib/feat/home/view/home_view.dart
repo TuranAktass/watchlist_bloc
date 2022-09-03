@@ -34,21 +34,18 @@ class _FavoritesView extends StatelessWidget {
   final FavoritesBloc _favoritesBloc = FavoritesBloc();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _favoritesBloc..add(const FavoritesLoad()),
-      child:
-          BlocBuilder<FavoritesBloc, FavoritesState>(builder: (context, state) {
-        if (state is FavoritesLoading) {
-          return const LoadingWidget();
-        } else if (state is FavoritesLoaded) {
-          return state.favorites.isNotEmpty
-              ? _buildFavList(state, context)
-              : const SizedBox.shrink();
-        } else {
-          return Container();
-        }
-      }),
-    );
+    return BlocBuilder<FavoritesBloc, FavoritesState>(
+        builder: (context, state) {
+      if (state is FavoritesLoading) {
+        return const LoadingWidget();
+      } else if (state is FavoritesLoaded) {
+        return state.favorites.isNotEmpty
+            ? _buildFavList(state, context)
+            : const SizedBox.shrink();
+      } else {
+        return Container();
+      }
+    });
   }
 
   Widget _buildFavList(FavoritesLoaded state, context) {
