@@ -12,8 +12,6 @@ class DatabaseService {
   Future<UserModel> retrieveUserData() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     var snapshot = await _db.collection("Users").doc(uid).get();
-
-    print(snapshot.data());
     return UserModel.fromDocumentSnapshot(snapshot);
   }
 

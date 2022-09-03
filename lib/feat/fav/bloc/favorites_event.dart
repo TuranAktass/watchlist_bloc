@@ -8,18 +8,17 @@ abstract class FavoritesEvent extends Equatable {
 }
 
 class FavoritesLoad extends FavoritesEvent {
-
   const FavoritesLoad();
 }
 
 class FavoritesAdd extends FavoritesEvent {
-  final String id;
+  final MovieBasicModel movie;
   final String uid;
-  const FavoritesAdd({required this.uid, required this.id});
+  const FavoritesAdd({required this.uid, required this.movie});
 }
 
 class FavoritesRemove extends FavoritesEvent {
-  final String id;
-  const FavoritesRemove({required this.id});
+  final String uid;
+  final MovieBasicModel movie;
+  const FavoritesRemove({required this.uid, required this.movie});
 }
-

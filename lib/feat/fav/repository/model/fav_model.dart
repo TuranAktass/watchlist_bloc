@@ -1,22 +1,16 @@
+import 'package:watchlist/feat/fav/repository/model/movie_basic_model.dart';
+
 class FavResponseModel {
-  List<FavModel> favList = [];
+  List<MovieBasicModel> favList = [];
   String? error;
 
   FavResponseModel.withError(this.error);
 
   FavResponseModel({required List<Map<String, dynamic>> data}) {
-    data.forEach((element) {
-      favList.add(FavModel.fromJson(element));
-    });
+    for (var element in data) {
+      favList.add(MovieBasicModel.fromJson(json: element));
+    }
   }
 
-  List<FavModel> get list => favList;
-}
-
-class FavModel {
-  String? id;
-
-  FavModel.fromJson(var json) {
-    id = json['id'];
-  }
+  List<MovieBasicModel> get list => favList;
 }

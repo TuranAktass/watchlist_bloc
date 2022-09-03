@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
-import 'package:watchlist/feat/home/resources/search_provider.dart';
+import 'package:watchlist/feat/search/repository/model/search_model/search_response_model.dart';
+import 'package:watchlist/feat/search/resources/search_provider.dart';
 
 class SearchRepository {
   final _searchProvider = SearchProvider();

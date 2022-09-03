@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
-import 'package:watchlist/feat/home/repository/search_repository/search_repository.dart';
+import 'package:watchlist/feat/search/repository/model/search_model/search_response_model.dart';
+import 'package:watchlist/feat/search/repository/search_repository/search_repository.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';

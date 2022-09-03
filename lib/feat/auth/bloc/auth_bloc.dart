@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
@@ -23,9 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(AuthenticationFailure());
           }
         } else if (event is AuthenticationSignedOut) {
-          log('HEYYY BLOC EVENT is AuthenticationSignedOut');
           await authRepository.signOut().then((_) {
-            print('sign out completed');
             emit(AuthenticationFailure());
           });
         }

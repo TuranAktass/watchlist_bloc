@@ -2,25 +2,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
-import 'package:watchlist/constants/watchlist_colors.dart';
+import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
-import 'package:watchlist/feat/auth/repository/auth_repository.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
-import 'package:watchlist/feat/fav/view/favorites_view.dart';
-import 'package:watchlist/feat/home/bloc/search_bloc.dart';
-import 'package:watchlist/feat/home/repository/model/movie_model/movie_response_model.dart';
-import 'package:watchlist/feat/home/repository/model/search_model/search_response_model.dart';
+import 'package:watchlist/feat/fav/repository/model/movie_basic_model.dart';
 import 'package:watchlist/feat/movie/movie_details/view/movie_details_view.dart';
+import 'package:watchlist/feat/search/bloc/search_bloc.dart';
+import 'package:watchlist/feat/search/repository/model/movie_model/movie_response_model.dart';
+import 'package:watchlist/feat/search/repository/model/search_model/search_response_model.dart';
 
-class WatchlistHomeView extends StatefulWidget {
-  const WatchlistHomeView({Key? key}) : super(key: key);
+class SearchView extends StatefulWidget {
+  const SearchView({Key? key}) : super(key: key);
 
   @override
-  State<WatchlistHomeView> createState() => _WatchlistHomeViewState();
+  State<SearchView> createState() => SearchViewState();
 }
 
-class _WatchlistHomeViewState extends State<WatchlistHomeView> {
+class SearchViewState extends State<SearchView> {
   final SearchBloc _searchBloc = SearchBloc();
 
   @override
@@ -35,36 +34,26 @@ class _WatchlistHomeViewState extends State<WatchlistHomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: WatchlistAppBar(
-            actions: [
-              IconButton(
-                icon: Icon(Icons.favorite, color: WatchlistColors.punch),
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FavoritesView())),
-              )
-            ],
             centerTitle: true,
             backgroundColor: Colors.white,
+            actions: [
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) => IconButton(
+                    icon: const Icon(Icons.exit_to_app, color: Colors.black),
+                    onPressed: () {
+                      context.read<AuthBloc>().add(AuthenticationSignedOut());
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WelcomeView()),
+                          (route) => true);
+                    }),
+              )
+            ],
             title:
                 const Text('Watchlist', style: TextStyle(color: Colors.black))),
         body: Column(
           children: [
-            Expanded(
-                flex: 1,
-                child: BlocBuilder<AuthBloc, AuthState>(
-                  builder: (context, state) => IconButton(
-                      icon: const Icon(Icons.exit_to_app, color: Colors.black),
-                      onPressed: () {
-                        context.read<AuthBloc>().add(AuthenticationSignedOut());
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const WelcomeView()),
-                            (route) => true);
-                      }),
-                )),
-
-            //context.read<AuthBloc>().add(AuthenticationStarted());
-            //context.read<AuthBloc>().add(AuthenticationStarted());
             Expanded(
               flex: 1,
               child: BlocProvider(
@@ -140,7 +129,6 @@ class SearchField extends StatelessWidget {
 
 class MovieListItem extends StatelessWidget {
   final MovieResponseModel model;
-
   const MovieListItem({Key? key, required this.model}) : super(key: key);
 
   @override
@@ -152,20 +140,11 @@ class MovieListItem extends StatelessWidget {
                 builder: (context) => MovieDetailsView(id: model.imdbID!))),
         title: Text(model.title!),
         subtitle: Text(model.year!),
-        trailing: BlocProvider(
-          create: (context) => FavoritesBloc(),
-          child: BlocBuilder<FavoritesBloc, FavoritesState>(
-              builder: (context, state) {
-            return IconButton(
-                icon: const Icon(Icons.favorite),
-                onPressed: () async {
-                  var uid = FirebaseAuth.instance.currentUser!.uid;
-
-                  context
-                      .read<FavoritesBloc>()
-                      .add(FavoritesAdd(uid: uid, id: model.imdbID!));
-                });
-          }),
+        trailing: SizedBox(
+          width: 50,
+          height: 50,
+          child: _FavoriteButton(
+              model: MovieBasicModel.fromSearchResponse(model: model)),
         ),
         leading: SizedBox(
           width: 50,
@@ -177,5 +156,78 @@ class MovieListItem extends StatelessWidget {
                 Image.asset('assets/images/no_image.png'),
           ),
         ));
+  }
+}
+
+class _FavoriteButton extends StatefulWidget {
+  const _FavoriteButton({Key? key, required this.model}) : super(key: key);
+  final MovieBasicModel model;
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<_FavoriteButton> {
+  @override
+  initState() {
+    super.initState();
+  }
+
+  bool isFav = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FavoritesBloc, FavoritesState>(
+      builder: (context, state) {
+        if (state is FavoritesLoad) {
+          return const Text('fav load');
+        }
+        /* if (state is FavoritesLoading) {
+          return const LoadingWidget();
+        } */
+        if (state is FavoritesLoaded) {
+          if (state.favorites.contains(widget.model)) {
+            return _buildRemoveFavButton();
+          } else {
+            return _buildAddFavButton();
+          }
+        }
+        if (state is FavoritesRemove) {
+          return const Text('fav remove');
+        }
+        if (state is FavoritesLoading || state is FavoritesInitial) {
+          return const LoadingWidget();
+        }
+        if (state is FavoritesAdd) {
+          return const Text('fav add');
+        } else {
+          return Text('fav error: ${state.toString()}');
+        }
+      },
+    );
+  }
+
+  String _getUID() {
+    return FirebaseAuth.instance.currentUser!.uid;
+  }
+
+  _buildAddFavButton() {
+    return IconButton(
+      icon: const Icon(Icons.favorite_border),
+      onPressed: () {
+        context
+            .read<FavoritesBloc>()
+            .add(FavoritesAdd(uid: _getUID(), movie: widget.model));
+      },
+    );
+  }
+
+  _buildRemoveFavButton() {
+    return IconButton(
+        icon: const Icon(Icons.favorite, color: Colors.red),
+        onPressed: () {
+          context
+              .read<FavoritesBloc>()
+              .add(FavoritesRemove(uid: _getUID(), movie: widget.model));
+        });
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:watchlist/feat/home/view/home_view/home_view.dart';
+import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog({Key? key, required this.errorMessage}) : super(key: key);
@@ -16,8 +16,7 @@ class ErrorDialog extends StatelessWidget {
           child: const Text('OK'),
           onPressed: () => errorMessage.contains("Please Verify your email")
               ? Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                      builder: (context) => const WatchlistHomeView()),
+                  MaterialPageRoute(builder: (context) => const SearchView()),
                   (Route<dynamic> route) => false)
               : Navigator.of(context).pop(),
         )
