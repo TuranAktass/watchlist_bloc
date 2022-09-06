@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/bloc/bloc_observer.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
@@ -21,17 +21,17 @@ void main() async {
 
   Bloc.observer = AppBlocObserver();
 
-  runApp(Phoenix(
-    child: MultiBlocProvider(providers: [
+  runApp(
+    MultiBlocProvider(providers: [
       BlocProvider(create: (context) => FormBloc()),
       BlocProvider(create: (context) => DatabaseBloc(DatabaseRepositoryImpl())),
       BlocProvider(
           create: (context) =>
-              AuthBloc(AuthRepository())..add(AuthenticationStarted())),
+              AuthBloc(AuthRepository())..add(const AuthenticationStarted())),
       BlocProvider(
           create: (context) => FavoritesBloc()..add(const FavoritesLoad()))
     ], child: const WatchlistApp()),
-  ));
+  );
 }
 
 class WatchlistApp extends StatelessWidget {
@@ -56,10 +56,12 @@ class BlocNavigate extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthSuccess) {
           return const WatchlistNavBar();
+        } else if (state is AuthLoading) {
+          return const LoadingWidget();
         } else if (state is AuthenticationFailure) {
           return const WelcomeView();
         } else {
-          return Container();
+          return const WelcomeView();
         }
       },
     );

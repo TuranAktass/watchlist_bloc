@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/custom/scaffold_body_padding.dart';
-import 'package:watchlist/components/dialog/error_dialog.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
-import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
+import 'package:watchlist/feat/navigation/view/navbar_view.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({Key? key}) : super(key: key);
@@ -17,13 +16,8 @@ class SignInView extends StatelessWidget {
         listeners: [
           BlocListener<FormBloc, FormValidate>(
             listener: (context, state) {
-              if (state.errorMessage.isNotEmpty) {
-                showDialog(
-                    context: context,
-                    builder: (context) =>
-                        ErrorDialog(errorMessage: state.errorMessage));
-              } else if (state.isFormValid && !state.isLoading) {
-                context.read<AuthBloc>().add(AuthenticationStarted());
+              if (state.isFormValid && !state.isLoading) {
+                context.read<AuthBloc>().add(const AuthenticationStarted());
               } else if (state.isFormValidateFailed) {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Form is not valid')));
@@ -34,7 +28,8 @@ class SignInView extends StatelessWidget {
             listener: (context, state) {
               if (state is AuthSuccess) {
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const SearchView()),
+                    MaterialPageRoute(
+                        builder: (context) => const WatchlistNavBar()),
                     (Route<dynamic> route) => false);
               }
             },
@@ -139,8 +134,9 @@ class _SubmitButton extends StatelessWidget {
                       .headline4!
                       .copyWith(color: WatchlistColors.white)),
             ),
-            onPressed: () =>
-                context.read<FormBloc>().add(const FormSubmitted(Status.login)),
+            onPressed: () {
+              context.read<FormBloc>().add(const FormSubmitted(Status.login));
+            },
           ),
         );
       },

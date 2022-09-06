@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
 import 'package:watchlist/components/custom/scaffold_body_padding.dart';
 import 'package:watchlist/components/loading/loading.dart';
@@ -52,19 +51,12 @@ class ProfileView extends StatelessWidget {
         const _VerticalPadding(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [FollowersView(), FollowingsView()],
+          children: const [FollowersView(), FollowingsView()],
         ),
         const _VerticalPadding(),
         Text('Bio: ${state.user.bio}'),
         _UserLists(),
-        BlocBuilder<AuthBloc, AuthState>(
-          builder: (context, state) => IconButton(
-              icon: const Icon(Icons.exit_to_app, color: Colors.black),
-              onPressed: () {
-                context.read<AuthBloc>().add(AuthenticationSignedOut());
-                Phoenix.rebirth(context);
-              }),
-        )
+        const LogoutButton()
       ],
     );
   }
@@ -104,5 +96,19 @@ class _VerticalPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(height: 16);
+  }
+}
+
+class LogoutButton extends StatelessWidget {
+  const LogoutButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+      return IconButton(
+          icon: const Icon(Icons.exit_to_app, color: Colors.black),
+          onPressed: () => BlocProvider.of<AuthBloc>(context)
+              .add(const AuthenticationSignedOut()));
+    });
   }
 }

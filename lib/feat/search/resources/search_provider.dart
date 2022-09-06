@@ -25,14 +25,12 @@ class SearchProvider {
         .where('displayName', isEqualTo: query)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         uList.add(
             FollowUserModel.fromJson(json: element.data())..uid = element.id);
-
-        print(element.id);
-      });
+      }
     });
-    print(uList);
+
     return uList;
   }
 }

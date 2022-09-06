@@ -31,7 +31,6 @@ class HomeView extends StatelessWidget {
 }
 
 class _FavoritesView extends StatelessWidget {
-  final FavoritesBloc _favoritesBloc = FavoritesBloc();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoritesBloc, FavoritesState>(

@@ -16,7 +16,6 @@ class SearchRepository {
   Future<List<FollowUserModel>> fetchUserSearchResult({String? query}) async {
     log('DATA: $query');
     var data = await _searchProvider.fetchUserSearchResult(query: query);
-    print(data);
     return data;
   }
 }

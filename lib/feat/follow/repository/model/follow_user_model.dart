@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class FollowUserModel {
   String? uid;
   String? displayName;
@@ -7,7 +5,6 @@ class FollowUserModel {
   bool? isFollowing;
 
   FollowUserModel.fromJson({required Map<String, dynamic> json}) {
-    print('json : ${json.toString()}');
     uid = json['uid'];
     displayName = json['displayName'];
     email = json['email'];
