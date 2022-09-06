@@ -22,7 +22,7 @@ class SignUpView extends StatelessWidget {
                 builder: (context) =>
                     ErrorDialog(errorMessage: state.errorMessage));
           } else if (state.isFormValid && !state.isLoading) {
-            context.read<AuthBloc>().add(AuthenticationStarted());
+            context.read<AuthBloc>().add(const AuthenticationStarted());
             context.read<FormBloc>().add(const FormSucceeded());
           } else if (state.isFormValidateFailed) {
             ScaffoldMessenger.of(context).showSnackBar(

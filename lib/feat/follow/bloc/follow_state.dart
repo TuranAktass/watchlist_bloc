@@ -12,10 +12,10 @@ class FollowInitial extends FollowState {}
 class FollowLoading extends FollowState {}
 
 class FollowPageLoaded extends FollowState {
-  List<FollowUserModel> followers;
-  List<FollowUserModel> followings;
+  final List<FollowUserModel> followers;
+  final List<FollowUserModel> followings;
 
-  FollowPageLoaded({required this.followers, required this.followings});
+  const FollowPageLoaded({required this.followers, required this.followings});
 
   @override
   List<Object> get props => [followers, followings];

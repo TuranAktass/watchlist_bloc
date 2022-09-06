@@ -25,8 +25,8 @@ class AuthRepository {
     }
   }
 
-  Future<void> signOut() {
-    return service.signOut();
+  Future signOut() async {
+    await service.signOut();
   }
 
   Future<String?> retrieveUserName(UserModel user) {

@@ -7,8 +7,6 @@ import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/constants/enums.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
-import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
-import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/fav/repository/model/movie_basic_model.dart';
 import 'package:watchlist/feat/follow/bloc/follow_bloc.dart';
@@ -129,8 +127,6 @@ class SearchViewState extends State<SearchView> {
         });
   }
 }
-
-/**/
 
 //TODO refactor :D
 class SearchField extends StatefulWidget {

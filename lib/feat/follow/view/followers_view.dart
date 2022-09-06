@@ -6,6 +6,8 @@ import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/feat/follow/bloc/follow_bloc.dart';
 
 class FollowersView extends StatelessWidget {
+  const FollowersView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

@@ -31,7 +31,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             await searchRepository.fetchUserSearchResult(query: event.query);
         emit(UserSearchLoaded(userList));
         if (userList.isEmpty) {
-          emit(SearchError("No user found"));
+          emit(const SearchError("No user found"));
         }
       } catch (e) {
         emit(SearchError(e.toString()));

@@ -39,7 +39,6 @@ class FollowingsView extends StatelessWidget {
     return ListView.builder(
         itemCount: followings.length,
         itemBuilder: (context, index) {
-          print(index);
           return ListTile(
             leading: const CircleAvatar(radius: 40),
             title: Text(followings[index].displayName),

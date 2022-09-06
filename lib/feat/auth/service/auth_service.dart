@@ -44,8 +44,8 @@ class AuthService {
     }
   }
 
-  Future<void> signOut() async {
-    return await FirebaseAuth.instance.signOut();
+  Future signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 
   Future<String?> retrieveUserName(UserModel user) async {

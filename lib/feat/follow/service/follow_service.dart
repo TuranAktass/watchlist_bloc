@@ -8,7 +8,7 @@ class FollowService {
 
   Future<dynamic> followRequest({required String uid}) async {
     final currentUser = _auth.currentUser!.uid;
-    final res = await _firestore
+    await _firestore
         .collection("Users")
         .doc(currentUser)
         .collection('followings')
@@ -25,7 +25,7 @@ class FollowService {
 
   Future<dynamic> unFollowRequest({required String uid}) async {
     final currentUser = _auth.currentUser!.uid;
-    final res = await _firestore
+    await _firestore
         .collection("Users")
         .doc(currentUser)
         .collection('followings')
@@ -50,6 +50,7 @@ class FollowService {
     var followers =
         res.docs.map((e) => FollowUserModel.fromJson(json: e.data())).toList();
     List<FollowUserModel> list = [];
+    // ignore: avoid_function_literals_in_foreach_calls
     followers.forEach((element) async {
       var x = await _firestore.collection('Users').doc(element.uid).get();
       list.add(FollowUserModel.fromJson(json: x.data()!));
@@ -72,7 +73,6 @@ class FollowService {
     for (var element in followings) {
       var x = await _firestore.collection('Users').doc(element.uid).get();
       list.add(FollowUserModel.fromJson(json: x.data()!));
-      print(element);
     }
 
     return list;

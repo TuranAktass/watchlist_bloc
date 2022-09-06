@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:watchlist/feat/search/repository/model/movie_model/movie_response_model.dart';
 
+// ignore: must_be_immutable
 class MovieBasicModel extends Equatable {
   String? year;
   String? imdbID;

@@ -17,6 +17,25 @@ class AuthSuccess extends AuthState {
 }
 
 class AuthenticationFailure extends AuthState {
+  const AuthenticationFailure();
+
+  @override
+  List<Object> get props => [];
+}
+
+class AuthLoading extends AuthState {
+  const AuthLoading();
+
+  @override
+  List<Object> get props => [];
+}
+
+class LogoutRequested extends AuthState {
+  @override
+  List<Object> get props => [];
+}
+
+class LogoutCompleted extends AuthState {
   @override
   List<Object> get props => [];
 }
