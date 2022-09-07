@@ -13,9 +13,4 @@ class AuthenticationStarted extends AuthEvent {
   List<Object> get props => [];
 }
 
-class AuthenticationSignedOut extends AuthEvent {
-  const AuthenticationSignedOut();
-
-  @override
-  List<Object> get props => [];
-}
+class AuthenticationSignedOut extends AuthEvent {}
