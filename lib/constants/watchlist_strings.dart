@@ -10,6 +10,9 @@ class WatchlistStrings {
   static const nickname = 'Display Name';
   static const homePage = 'Home';
   static const favorites = 'Favorites';
+
+  static const followings = 'Followings';
+  static const followers = 'Followers';
 }
 
 class WatchlistErrorStrings {

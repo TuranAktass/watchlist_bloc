@@ -7,6 +7,7 @@ abstract class FollowRepository {
   Future<dynamic> unFollowRequest({required String uid});
   Future<List<FollowUserModel>> getFollowers();
   Future<List<FollowUserModel>> getFollowing();
+  Future<FollowUserModel> getUserDetails({required String uid});
 }
 
 class FollowRepositoryImpl extends FollowRepository {
@@ -31,5 +32,10 @@ class FollowRepositoryImpl extends FollowRepository {
   @override
   Future unFollowRequest({required String uid}) async {
     await _service.unFollowRequest(uid: uid);
+  }
+
+  @override
+  Future<FollowUserModel> getUserDetails({required String uid}) async {
+    return await _service.getUserDetails(uid: uid);
   }
 }

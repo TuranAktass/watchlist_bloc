@@ -6,11 +6,14 @@ import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
 import 'package:watchlist/components/custom/scaffold_body_padding.dart';
 import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
+import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/database/bloc/database_bloc.dart';
+import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/follow/view/followers_view.dart';
 import 'package:watchlist/feat/follow/view/followings_view.dart';
+import 'package:watchlist/feat/follow/view/friend_profile_view/friend_profile_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -55,8 +58,9 @@ class ProfileView extends StatelessWidget {
           children: const [FollowersView(), FollowingsView()],
         ),
         const _VerticalPadding(),
-        Text('Bio: ${state.user.bio}'),
-        _UserLists(),
+
+        ///_UserLists(),
+        _FavList(),
         const LogoutButton()
       ],
     );
@@ -89,6 +93,46 @@ class _DisplayNameView extends StatelessWidget {
             .textTheme
             .headline4!
             .copyWith(color: WatchlistColors.ebonyClay));
+  }
+}
+
+class _FavList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FavoritesBloc, FavoritesState>(
+      builder: (context, state) {
+        if (state is FavoritesLoading) {
+          return const LoadingWidget();
+        } else if (state is FavoritesLoaded) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(WatchlistStrings.favorites,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4!
+                      .copyWith(color: WatchlistColors.ebonyClay)),
+              SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                      itemCount: state.favorites.length > 5
+                          ? 5
+                          : state.favorites.length,
+                      itemBuilder: (context, index) {
+                        var movie = state.favorites[index];
+                        return ListTile(
+                          leading: Image.network(movie.poster!),
+                          title: Text(movie.title!),
+                          subtitle: Text(movie.year!),
+                        );
+                      })),
+            ],
+          );
+        } else {
+          return ErrorWidget(state);
+        }
+      },
+    );
   }
 }
 

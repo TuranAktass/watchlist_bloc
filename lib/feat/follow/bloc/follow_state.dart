@@ -21,6 +21,16 @@ class FollowPageLoaded extends FollowState {
   List<Object> get props => [followers, followings];
 }
 
+class UserDetailsLoading extends FollowState {}
+
+class UserDetailsFetched extends FollowState {
+  final FollowUserModel user;
+  const UserDetailsFetched({required this.user});
+
+  @override
+  List<Object> get props => [user];
+}
+
 class FollowPageError extends FollowState {
   final String message;
   const FollowPageError({required this.message});

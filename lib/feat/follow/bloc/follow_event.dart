@@ -29,3 +29,11 @@ class GetFollowers extends FollowEvent {}
 class GetFollowings extends FollowEvent {}
 
 class GetFollowData extends FollowEvent {}
+
+class GetUserDetails extends FollowEvent {
+  final String uid;
+  const GetUserDetails({required this.uid});
+
+  @override
+  List<Object> get props => [uid];
+}

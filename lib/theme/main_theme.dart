@@ -4,6 +4,9 @@ import 'package:watchlist/constants/watchlist_colors.dart';
 class WatchlistTheme {
   static ThemeData get mainTheme => ThemeData(
         primaryColor: WatchlistColors.greenPea,
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: WatchlistColors.cork),
+        ),
         inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: WatchlistColors.white,

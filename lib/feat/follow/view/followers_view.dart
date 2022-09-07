@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/feat/follow/bloc/follow_bloc.dart';
+import 'package:watchlist/feat/follow/view/friend_profile_view/friend_profile_view.dart';
 
 class FollowersView extends StatelessWidget {
   const FollowersView({Key? key}) : super(key: key);
@@ -39,6 +40,11 @@ class FollowersView extends StatelessWidget {
     return ListView.builder(
       itemCount: followers.length,
       itemBuilder: (context, index) => ListTile(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    FriendProfileView(model: followers[index]))),
         leading: const CircleAvatar(),
         title: Text(followers[index].displayName),
         subtitle: Text(followers[index].email),
