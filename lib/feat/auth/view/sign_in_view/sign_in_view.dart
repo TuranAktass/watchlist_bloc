@@ -26,7 +26,7 @@ class SignInView extends StatelessWidget {
           ),
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is AuthSuccess) {
+              if (state is Authenticated) {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                         builder: (context) => const WatchlistNavBar()),

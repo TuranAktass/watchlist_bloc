@@ -149,7 +149,6 @@ class FormBloc extends Bloc<FormEvent, FormValidate> {
 
   _authenticateUser(
       FormSubmitted event, Emitter<FormValidate> emit, UserModel user) async {
-    log('IM CALLED');
     emit(state.copyWith(
         errorMessage: "",
         isFormValid:

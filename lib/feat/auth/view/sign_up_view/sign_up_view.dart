@@ -6,7 +6,6 @@ import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
-import 'package:watchlist/feat/search/view/search_view/seach_view.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -29,15 +28,6 @@ class SignUpView extends StatelessWidget {
                 const SnackBar(content: Text('Form is not valid')));
           }
         }),
-        BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccess) {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const SearchView()),
-                  (Route<dynamic> route) => false);
-            }
-          },
-        ),
       ],
       child: Scaffold(
         backgroundColor: WatchlistColors.ebonyClay,

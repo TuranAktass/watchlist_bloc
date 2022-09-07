@@ -7,6 +7,7 @@ import 'package:watchlist/components/custom/scaffold_body_padding.dart';
 import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
+import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/database/bloc/database_bloc.dart';
 import 'package:watchlist/feat/follow/view/followers_view.dart';
 import 'package:watchlist/feat/follow/view/followings_view.dart';
@@ -104,11 +105,10 @@ class LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-      return IconButton(
-          icon: const Icon(Icons.exit_to_app, color: Colors.black),
-          onPressed: () => BlocProvider.of<AuthBloc>(context)
-              .add(const AuthenticationSignedOut()));
-    });
+    return IconButton(
+        icon: const Icon(Icons.exit_to_app, color: Colors.black),
+        onPressed: () {
+          context.read<AuthBloc>().add(AuthenticationSignedOut());
+        });
   }
 }
