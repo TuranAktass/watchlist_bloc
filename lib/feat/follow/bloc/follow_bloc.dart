@@ -31,5 +31,10 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
       final followings = await repository.getFollowing();
       emit(FollowPageLoaded(followers: followers, followings: followings));
     });
+    on<GetUserDetails>((event, emit) async {
+      emit(UserDetailsLoading());
+      final user = await repository.getUserDetails(uid: event.uid);
+      emit(UserDetailsFetched(user: user));
+    });
   }
 }
