@@ -8,12 +8,10 @@ import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
-import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/database/bloc/database_bloc.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/follow/view/followers_view.dart';
 import 'package:watchlist/feat/follow/view/followings_view.dart';
-import 'package:watchlist/feat/follow/view/friend_profile_view/friend_profile_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -49,7 +47,7 @@ class ProfileView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const CircleAvatar(radius: 70),
+        /* const CircleAvatar(radius: 70),
         const _VerticalPadding(),
         _DisplayNameView(name: state.displayName ?? ''),
         const _VerticalPadding(),
@@ -60,7 +58,7 @@ class ProfileView extends StatelessWidget {
         const _VerticalPadding(),
 
         ///_UserLists(),
-        _FavList(),
+        _FavList(), */
         const LogoutButton()
       ],
     );

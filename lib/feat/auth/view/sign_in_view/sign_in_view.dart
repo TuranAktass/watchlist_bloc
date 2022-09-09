@@ -24,16 +24,6 @@ class SignInView extends StatelessWidget {
               }
             },
           ),
-          BlocListener<AuthBloc, AuthState>(
-            listener: (context, state) {
-              if (state is Authenticated) {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => const WatchlistNavBar()),
-                    (Route<dynamic> route) => false);
-              }
-            },
-          )
         ],
         child: const Scaffold(
             backgroundColor: WatchlistColors.ebonyClay,
@@ -120,26 +110,22 @@ class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocBuilder<FormBloc, FormValidate>(
-      builder: (context, state) {
-        return SizedBox(
-          width: size.width / 1.5,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: WatchlistColors.deYork),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(WatchlistStrings.login,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4!
-                      .copyWith(color: WatchlistColors.white)),
-            ),
-            onPressed: () {
-              context.read<FormBloc>().add(const FormSubmitted(Status.login));
-            },
-          ),
-        );
-      },
+    return SizedBox(
+      width: size.width / 1.5,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: WatchlistColors.deYork),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(WatchlistStrings.login,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(color: WatchlistColors.white)),
+        ),
+        onPressed: () {
+          context.read<FormBloc>().add(const FormSubmitted(Status.login));
+        },
+      ),
     );
   }
 }

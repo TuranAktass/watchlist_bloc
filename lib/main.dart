@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/components/loading/loading_dialog.dart';
+import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/bloc/bloc_observer.dart';
 import 'package:watchlist/feat/auth/repository/auth_repository.dart';
@@ -12,6 +14,7 @@ import 'package:watchlist/feat/database/bloc/database_bloc.dart';
 import 'package:watchlist/feat/database/repository/database_repository.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/form/bloc/form_bloc.dart';
+import 'package:watchlist/feat/home/view/home_view.dart';
 import 'package:watchlist/feat/navigation/view/navbar_view.dart';
 import 'package:watchlist/firebase_options.dart';
 import 'package:watchlist/theme/main_theme.dart';
@@ -53,18 +56,22 @@ class BlocNavigate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
         if (state is Loading) {
-          return const LoadingWidget();
+          showCupertinoDialog(
+              context: context, builder: (context) => const LoadingDialog());
         } else if (state is Authenticated) {
-          return const WatchlistNavBar();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const WatchlistNavBar()));
         } else if (state is Unauthenticated) {
-          return const WelcomeView();
-        } else {
-          return const SignInView();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const WelcomeView()));
         }
       },
+      child: const Scaffold(
+        backgroundColor: WatchlistColors.ebonyClay,
+      ),
     );
   }
 }
