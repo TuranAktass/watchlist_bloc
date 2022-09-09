@@ -5,6 +5,7 @@ import 'package:watchlist/components/custom/scaffold_body_padding.dart';
 import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
+import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 
 class HomeView extends StatelessWidget {
@@ -14,6 +15,13 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WatchlistAppBar(
+        actions: [
+          IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                context.read<AuthBloc>().add(AuthenticationSignedOut());
+              })
+        ],
         backgroundColor: WatchlistColors.white,
         title: const Text(WatchlistStrings.watchlist,
             style: TextStyle(color: WatchlistColors.cork)),

@@ -10,6 +10,7 @@ class WatchlistNavBar extends StatelessWidget {
   const WatchlistNavBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print('navbar build method');
     return PersistentTabView(
       context,
       controller: PersistentTabController(initialIndex: 0),

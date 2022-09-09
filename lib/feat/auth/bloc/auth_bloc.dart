@@ -18,6 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _onAuthStarted(AuthenticationStarted event, Emitter<AuthState> emit) async {
+    emit(Loading());
     UserModel user = await authRepository.getCurrentUser().first;
     if (user.uid != "uid") {
       emit(Authenticated());
@@ -27,6 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   _onSignOut(AuthenticationSignedOut event, Emitter<AuthState> emit) async {
+    emit(Loading());
     authRepository.signOut();
     emit(Unauthenticated());
   }
