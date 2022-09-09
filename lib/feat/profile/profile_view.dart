@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
+import 'package:watchlist/components/buttons/logout_button.dart';
 import 'package:watchlist/components/custom/scaffold_body_padding.dart';
 import 'package:watchlist/components/loading/loading.dart';
+import 'package:watchlist/components/padding/vertical_padding.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
@@ -47,36 +49,20 @@ class ProfileView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        /* const CircleAvatar(radius: 70),
-        const _VerticalPadding(),
+        const CircleAvatar(radius: 70),
+        const VerticalPadding(),
         _DisplayNameView(name: state.displayName ?? ''),
-        const _VerticalPadding(),
+        const VerticalPadding(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: const [FollowersView(), FollowingsView()],
         ),
-        const _VerticalPadding(),
+        const VerticalPadding(),
 
         ///_UserLists(),
-        _FavList(), */
+        _FavList(),
         const LogoutButton()
       ],
-    );
-  }
-}
-
-class _UserLists extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: Text(
-        'Lists',
-        style: Theme.of(context)
-            .textTheme
-            .headline4!
-            .copyWith(color: WatchlistColors.ebonyClay),
-      ),
     );
   }
 }
@@ -131,26 +117,5 @@ class _FavList extends StatelessWidget {
         }
       },
     );
-  }
-}
-
-class _VerticalPadding extends StatelessWidget {
-  const _VerticalPadding({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(height: 16);
-  }
-}
-
-class LogoutButton extends StatelessWidget {
-  const LogoutButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-        icon: const Icon(Icons.exit_to_app, color: Colors.black),
-        onPressed: () {
-          context.read<AuthBloc>().add(AuthenticationSignedOut());
-        });
   }
 }

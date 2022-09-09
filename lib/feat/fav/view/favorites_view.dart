@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchlist/components/app_bar/watchlist_appbar.dart';
 import 'package:watchlist/components/custom/scaffold_body_padding.dart';
+import 'package:watchlist/components/list_element/movie_list_element.dart';
 import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
+import 'package:watchlist/feat/fav/repository/model/movie_basic_model.dart';
 import 'package:watchlist/feat/movie/movie_details/view/movie_details_view.dart';
 
 class FavoritesView extends StatefulWidget {
@@ -50,17 +52,7 @@ class _FavoritesViewState extends State<FavoritesView> {
                             itemCount: state.favorites.length,
                             itemBuilder: (context, index) {
                               var fav = state.favorites[index];
-                              return ListTile(
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MovieDetailsView(
-                                              id: fav.imdbID!,
-                                            ))),
-                                leading: Image.network(fav.poster!),
-                                title: Text(fav.title!),
-                                subtitle: Text(fav.year!),
-                              );
+                              return MovieListElement(movie: fav);
                             });
                       } else if (state is FavoritesError) {
                         return const Text('Favorites Error');

@@ -42,7 +42,7 @@ class WatchlistNavBar extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+          NavBarStyle.style2, // Choose the nav bar style with this property.
     );
   }
 

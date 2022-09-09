@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchlist/components/custom/genre_row_view.dart';
 import 'package:watchlist/components/custom/rating_starts.dart';
+import 'package:watchlist/components/padding/vertical_padding.dart';
+import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/movie/movie_details/bloc/movie_details_bloc.dart';
 import 'package:watchlist/feat/movie/movie_details/repository/model/movie_details_model.dart';
 
@@ -24,7 +27,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: SingleChildScrollView(
@@ -59,64 +62,39 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const VerticalPadding(),
+        const VerticalPadding(),
         Center(child: _NetworkPosterView(poster: details.poster!)),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         Text('${details.title!}, ${details.year!}',
             style: Theme.of(context)
                 .textTheme
                 .headline4!
-                .copyWith(color: Colors.white)),
-        const SizedBox(height: 16),
+                .copyWith(color: WatchlistColors.ebonyClay)),
+        const VerticalPadding(),
         RateStars(rating: details.imdbRating!),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         GenreRow(genres: details.genre!),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         Text(details.plot!,
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         Text('Director: ${details.director!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         Text('Actors: ${details.actors!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         Text('Writer: ${details.writer!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         Text('Awards: ${details.awards!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
-        const SizedBox(height: 16),
+        const VerticalPadding(),
         Text('Released: ${details.released!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
-        const SizedBox(height: 16),
+        const VerticalPadding()
       ],
-    );
-  }
-}
-
-class GenreRow extends StatelessWidget {
-  const GenreRow({Key? key, required this.genres}) : super(key: key);
-  final String genres;
-
-  @override
-  Widget build(BuildContext context) {
-    List<String> genreList = genres.split(',');
-    return Row(
-      children: List.generate(genreList.length, (index) {
-        return _buildGenreCard(genreList[index]);
-      }),
-    );
-  }
-
-  _buildGenreCard(String genre) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[800],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Text(genre, style: const TextStyle(color: Colors.white)),
     );
   }
 }
@@ -141,16 +119,28 @@ class _NetworkPosterView extends StatelessWidget {
             // Colors.transparent // <-- you might need this if you want full transparency at the edge
           ],
           stops: const [
-            0.0,
+            1,
+            1,
+            1,
+            1
+            /* 0.0,
             0.5,
             0.55,
-            1.0,
+            1.0, */
           ], //<-- the gradient is interpolated, and these are where the colors above go into effect (that's why there are two colors repeated)
         ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
       },
       blendMode: BlendMode.dstIn,
-      child: Image.network(poster,
-          width: size.width, height: size.height * 0.56, fit: BoxFit.cover),
+      child: Container(
+        width: size.width * 0.7,
+        height: size.height * 0.4,
+        decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image: Image.network(poster, fit: BoxFit.fitWidth).image)),
+      ),
     );
   }
 }
