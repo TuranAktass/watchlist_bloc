@@ -15,6 +15,18 @@ class WatchlistStrings {
   static const followers = 'Followers';
 }
 
+class WatchlistFeatStrings {
+  static const movie = 'Movie';
+  static const introduction = 'Introduction';
+  static const director = 'Director';
+  static const actors = 'Actors';
+  static const ratings = 'Ratings';
+  static const awards = 'Awards';
+  static const released = 'Released';
+  static const year = 'Year';
+  static const writer = 'Writer';
+}
+
 class WatchlistErrorStrings {
   static const email = 'Please ensure the email entered is valid';
   static const password = 'Password must be at least 6 characters';

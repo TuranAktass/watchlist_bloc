@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:watchlist/feat/auth/repository/model/user_model.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/model/user_model.dart';
 import 'package:watchlist/feat/auth/service/auth_service.dart';
 
 class AuthRepository {

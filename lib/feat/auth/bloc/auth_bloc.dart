@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:watchlist/feat/auth/repository/auth_repository.dart';
-import 'package:watchlist/feat/auth/repository/model/user_model.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/auth_repository.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/model/user_model.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

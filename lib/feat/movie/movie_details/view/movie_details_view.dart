@@ -4,6 +4,7 @@ import 'package:watchlist/components/custom/genre_row_view.dart';
 import 'package:watchlist/components/custom/rating_starts.dart';
 import 'package:watchlist/components/padding/vertical_padding.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
+import 'package:watchlist/constants/watchlist_strings.dart';
 import 'package:watchlist/feat/movie/movie_details/bloc/movie_details_bloc.dart';
 import 'package:watchlist/feat/movie/movie_details/repository/model/movie_details_model.dart';
 
@@ -79,19 +80,19 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
         Text(details.plot!,
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
         const VerticalPadding(),
-        Text('Director: ${details.director!}',
+        Text('${WatchlistFeatStrings.director}: ${details.director!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
         const VerticalPadding(),
-        Text('Actors: ${details.actors!}',
+        Text('${WatchlistFeatStrings.actors}: ${details.actors!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
         const VerticalPadding(),
-        Text('Writer: ${details.writer!}',
+        Text('${WatchlistFeatStrings.writer}: ${details.writer!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
         const VerticalPadding(),
-        Text('Awards: ${details.awards!}',
+        Text('${WatchlistFeatStrings.awards}: ${details.awards!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
         const VerticalPadding(),
-        Text('Released: ${details.released!}',
+        Text('${WatchlistFeatStrings.released}: ${details.released!}',
             style: const TextStyle(color: Colors.grey, fontSize: 16)),
         const VerticalPadding()
       ],

@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:watchlist/feat/auth/repository/auth_repository.dart';
-import 'package:watchlist/feat/auth/repository/model/user_model.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/auth_repository.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/model/user_model.dart';
 import 'package:watchlist/feat/database/repository/database_repository.dart';
 import 'package:watchlist/feat/form/validation_constants/validation_constants.dart';
 

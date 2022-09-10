@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:watchlist/feat/auth/repository/model/user_model.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/model/user_model.dart';
 import 'package:watchlist/feat/database/repository/database_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

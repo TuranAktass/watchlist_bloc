@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +8,6 @@ import 'package:watchlist/components/loading/loading.dart';
 import 'package:watchlist/components/padding/vertical_padding.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/constants/watchlist_strings.dart';
-import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/database/bloc/database_bloc.dart';
 import 'package:watchlist/feat/fav/bloc/favorites_bloc.dart';
 import 'package:watchlist/feat/follow/view/followers_view.dart';
@@ -36,7 +34,6 @@ class ProfileView extends StatelessWidget {
             if (state is DatabaseSuccess) {
               return _buildUserInformation(state);
             } else {
-              log('state is ${state.runtimeType}');
               return const LoadingWidget();
             }
           },

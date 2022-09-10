@@ -1,4 +1,4 @@
-import 'package:watchlist/feat/auth/repository/model/user_model.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/model/user_model.dart';
 import 'package:watchlist/feat/database/service/database_service.dart';
 
 class DatabaseRepositoryImpl implements DatabaseRepository {

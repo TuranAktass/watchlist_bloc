@@ -7,7 +7,7 @@ import 'package:watchlist/components/loading/loading_dialog.dart';
 import 'package:watchlist/constants/watchlist_colors.dart';
 import 'package:watchlist/feat/auth/bloc/auth_bloc.dart';
 import 'package:watchlist/feat/auth/bloc/bloc_observer.dart';
-import 'package:watchlist/feat/auth/repository/auth_repository.dart';
+import 'package:watchlist/feat/auth/repository/firebase_auth/auth_repository.dart';
 import 'package:watchlist/feat/auth/view/sign_in_view/sign_in_view.dart';
 import 'package:watchlist/feat/auth/view/welcome_view/welcome_view.dart';
 import 'package:watchlist/feat/database/bloc/database_bloc.dart';
